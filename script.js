@@ -45,14 +45,26 @@ function animate() {
 animate();
 
 // 2. تتبع الماوس (GSAP)
-window.addEventListener('mousemove', (e) => {
+// 2. تتبع المؤشر (كمبيوتر + موبايل)
+function moveCursor(x, y) {
     gsap.to('.cursor-glow', {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 2,
+        x: x,
+        y: y,
+        duration: 0.9,
         ease: "power2.out"
     });
+}
+
+// كمبيوتر
+window.addEventListener('mousemove', (e) => {
+    moveCursor(e.clientX, e.clientY);
 });
+
+// موبايل
+window.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    moveCursor(touch.clientX, touch.clientY);
+}, { passive: true });
 
 // 3. ScrollTrigger للمشاريع
 gsap.registerPlugin(ScrollTrigger);
